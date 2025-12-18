@@ -39,18 +39,25 @@ jobs:
         
     - name: docker image 허브에 저장 
       run: docker push ehanadul/devops_step2:v1.0
+
+    - name: upload deploy config (배포 설정 파일 artifact 업로드)
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-config
+          path: |
+            docker-compose_nginx.yml
+            nginx/
         
   deploy:
     needs: build
     name: Deploy
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v3
+    - name: download deploy config
+      uses: actions/download-artifact@v4
       with:
-        sparse-checkout: |
-          docker-compose_nginx.yml
-          nginx/
-        sparse-checkout-cone-mode: false
+        name: deploy-config
+
     - name: docker login
       uses: docker/login-action@v1
       with:
