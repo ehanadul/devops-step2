@@ -41,12 +41,12 @@ jobs:
       run: docker push ehanadul/devops_step2:v1.0
 
     - name: upload deploy config (배포 설정 파일 artifact 업로드)
-        uses: actions/upload-artifact@v4
-        with:
-          name: deploy-config
-          path: |
-            docker-compose_nginx.yml
-            nginx/
+      uses: actions/upload-artifact@v4
+      with:
+        name: deploy-config
+        path: |
+          docker-compose_nginx.yml
+          nginx/
         
   deploy:
     needs: build
